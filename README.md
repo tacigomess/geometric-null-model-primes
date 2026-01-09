@@ -92,11 +92,10 @@ Together, they allow a controlled investigation of local spatial structure in th
 
 E1 — Generation of the geometric embedding (base dataset)
 
-Objective
+### Objective
 To construct a continuous geometric embedding of the natural numbers into a logarithmic spiral and to identify the real prime numbers within the analyzed interval. 
 This experiment defines the fixed geometric space used throughout the project.
 
--The output directory (/data) is created by the script.
 
 ```bash
 python E1_generate_log_spiral_dataset_min.py \
@@ -109,10 +108,11 @@ python E1_generate_log_spiral_dataset_min.py \
   --out_csv data/E1_base_log_espiral_1M.csv
 ```
 
-Output
+### Output
 data/E1_base_log_espiral_1M.csv
+-The output directory (/data) is created by the script.
 
-Typical columns include:
+###Typical columns include:
 
 n — natural number
 
@@ -120,10 +120,10 @@ x, y — geometric coordinates
 
 is_prime — arithmetic label (1 if prime, 0 otherwise)
 
-Interpretation
+### Interpretation
 This experiment fixes the geometry of the problem. Primes and composite numbers share the same embedding. No statistical hypothesis is tested at this stage; the output simply defines the spatial domain in which all subsequent analyses are performed.
 
-Notes: 
+### Notes: 
 1- Esse arquivo é o mesmo que os experimentos anteriores. 
 2- ...
 
