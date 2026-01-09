@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "Geometric Null Models for Prime Distributions"
+message: "If you use this software, please cite the associated manuscript."
+authors:
+  - family-names: Gomes
+    given-names: Taciana
+    affiliation: Independent Researcher
+date-released: 2026-01-08
+version: 0.1.0
+repository-code: https://github.com/tacigomess/geometric-null-model-primes
+abstract: >
+  This repository accompanies a research project investigating the spatial
+  organization of prime numbers through geometric embeddings and calibrated
+  Cramér-type null models. The work focuses on local density statistics and
+  multi-scale analysis to identify residual spatial correlations beyond
+  geometric and asymptotic effects.
+keywords:
+  - prime numbers
+  - geometric embedding
+  - null models
+  - Cramér model
+  - spatial statistics
+  - logarithmic spiral
+license: MIT
