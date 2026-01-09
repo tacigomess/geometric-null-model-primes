@@ -175,7 +175,9 @@ A `CITATION.cff` file is provided for automatic citation tools.
 
 ## License
 
-This project is released under an open-source license (see `LICENSE`).
+- Code (Python scripts, shell, etc.): **MIT License** (see `LICENSE`).
+- Article text, documentation and explanatory figures: **CC BY 4.0**  
+  © 2025 **Taciana Gomes**. You may share and adapt the material, provided appropriate credit is given.
 
 ---
 
