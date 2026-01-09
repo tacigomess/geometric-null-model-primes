@@ -110,9 +110,10 @@ python E1_generate_log_spiral_dataset_min.py \
 
 ### Output
 data/E1_base_log_espiral_1M.csv
+
 -The output directory (/data) is created by the script.
 
-###Typical columns include:
+### Typical columns include:
 
 n — natural number
 
