@@ -93,7 +93,7 @@ Together, they allow a controlled investigation of local spatial structure in th
 
 ### First of all: E1 — Generation of the geometric embedding (base dataset)
 
-### Objective
+### E1 — Objective
 To construct a continuous geometric embedding of the natural numbers into a logarithmic spiral and to identify the real prime numbers within the analyzed interval. 
 This experiment defines the fixed geometric space used throughout the project.
 
@@ -109,7 +109,7 @@ python E1_generate_log_spiral_dataset_min.py \
   --out_csv data/E1_base_log_espiral_1M.csv
 ```
 
-### Output
+### E1 — Output
 data/E1_base_log_espiral_1M.csv
 
 -The output directory (/data) is created by the script.
@@ -122,10 +122,10 @@ x, y — geometric coordinates
 
 is_prime — arithmetic label (1 if prime, 0 otherwise)
 
-### Interpretation
+### E1 — Interpretation
 This experiment fixes the geometry of the problem. Primes and composite numbers share the same embedding. No statistical hypothesis is tested at this stage; the output simply defines the spatial domain in which all subsequent analyses are performed.
 
-Notes
+E1 — Notes
 
 -This dataset is intentionally comprehensive. In addition to the features required for the present work, it also includes auxiliary features originally developed for a previous project on prime density halos. These additional features are not used in the current analysis.
 
@@ -133,17 +133,47 @@ Notes
 
 ### E2 — Construction of the geometric null model (Cramér-type)
 
-### Objective
+### E2 — Objective
 To generate a statistically controlled null configuration that preserves geometry and global intensity while removing arithmetic correlations among primes.
 
-### Script
+### E2 — Script
 ```bash
 python generate_null_on_real_embedding.py
 ```
 
-### Input
+### E2 — Input
 
 Base dataset generated in E1
+
+### E2 — Probability model
+
+```r
+p(n) = c / log(n)
+```
+
+### E2 — Output
+data/null_on_real_embedding.csv
+
+### E2 — Typical terminal output
+
+```sql
+Real primes: 78498 | Null events: 78207 | c = 0.9983
+```
+
+### E2 — Interpretation
+
+The null model:
+
+- uses exactly the same geometric coordinates as the real data,
+
+- matches the total number of events,
+
+- reproduces the large-scale rarefaction of primes,
+
+- removes all arithmetic correlations via independent Bernoulli sampling.
+
+This experiment defines the main null hypothesis of the study.
+
 
 --- verificar até aqui!!!
 ## Reproducing the results
