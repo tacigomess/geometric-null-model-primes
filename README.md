@@ -34,10 +34,11 @@ geometric-null-model-primes/
 │
 ├── README.md
 ├── LICENSE
+├── LICENSEdoc
 ├── CITATION.cff
 │
 ├── data/
-│   ├── real_embedding.csv
+│   ├── E1_base_log_espiral_1M.csv
 │   ├── null_on_real_embedding.csv
 │   └── radius_sweep_real_embedding.csv
 │
@@ -90,7 +91,7 @@ This project is organized as a sequence of numbered experiments.
 Each experiment produces well-defined outputs that serve as inputs for subsequent stages. 
 Together, they allow a controlled investigation of local spatial structure in the geometric distribution of prime numbers.
 
-E1 — Generation of the geometric embedding (base dataset)
+### First of all: E1 — Generation of the geometric embedding (base dataset)
 
 ### Objective
 To construct a continuous geometric embedding of the natural numbers into a logarithmic spiral and to identify the real prime numbers within the analyzed interval. 
@@ -124,9 +125,25 @@ is_prime — arithmetic label (1 if prime, 0 otherwise)
 ### Interpretation
 This experiment fixes the geometry of the problem. Primes and composite numbers share the same embedding. No statistical hypothesis is tested at this stage; the output simply defines the spatial domain in which all subsequent analyses are performed.
 
-### Notes: 
-1- Esse arquivo é o mesmo que os experimentos anteriores. 
-2- ...
+Notes
+
+-This dataset is intentionally comprehensive. In addition to the features required for the present work, it also includes auxiliary features originally developed for a previous project on prime density halos. These additional features are not used in the current analysis.
+
+-The same base dataset is reused across subsequent projects, ensuring consistency of the geometric embedding and facilitating comparative studies.
+
+### E2 — Construction of the geometric null model (Cramér-type)
+
+### Objective
+To generate a statistically controlled null configuration that preserves geometry and global intensity while removing arithmetic correlations among primes.
+
+### Script
+```bash
+python generate_null_on_real_embedding.py
+```
+
+### Input
+
+Base dataset generated in E1
 
 --- verificar até aqui!!!
 ## Reproducing the results
@@ -164,11 +181,42 @@ This script:
 python scripts/generate_null_on_real_embedding.py
 ```
 
-This script:
+### This script:
 - keeps the geometric embedding fixed,
 - replaces prime labels with independent Bernoulli events,
 - calibrates the normalization constant \( c \),
 - saves the null realization to `data/null_on_real_embedding.csv`.
+
+### Input
+
+Base dataset generated in E1
+
+### Probability model
+```bash
+p(n) = c / log(n)
+```
+
+### Output
+`data/null_on_real_embedding.csv`
+
+- Typical terminal output:
+```bash
+Real primes: 78498 | Null events: 78207 | c = 0.9983
+```
+
+### Interpretation
+
+The null model:
+
+- uses exactly the same geometric coordinates as the real data,
+
+- matches the total number of events,
+
+- reproduces the large-scale rarefaction of primes,
+
+- removes all arithmetic correlations via independent Bernoulli sampling.
+
+- This experiment defines the main null hypothesis of the study.
 
 ---
 
