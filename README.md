@@ -131,6 +131,8 @@ E1 — Notes
 
 -The same base dataset is reused across subsequent projects, ensuring consistency of the geometric embedding and facilitating comparative studies.
 
+---
+
 ### E2 — Construction of the geometric null model (Cramér-type)
 
 ### E2 — Objective
