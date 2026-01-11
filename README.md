@@ -9,11 +9,11 @@ Manuscript in preparation (2026)
 
 ## Overview
 
-This project investigates the spatial organization of prime numbers through a continuous geometric embedding of the natural numbers into a logarithmic spiral. Within this geometric representation, we define local prime densities based on Euclidean neighborhoods and analyze their statistical properties across multiple spatial scales.
+This project investigates the spatial organization of prime numbers through a continuous geometric embedding of the natural numbers into a logarithmic spiral in the plane. Within this embedding, local prime densities are defined using Euclidean neighborhoods, enabling a systematic analysis of local structure across multiple spatial scales.
 
-To assess whether observed local structures can be explained solely by geometric effects and by the average rarefaction of primes, we introduce a **geometric null model inspired by Cramér’s probabilistic model**. In this null configuration, the embedding geometry and global intensity are preserved, while arithmetic correlations are removed via independent Bernoulli sampling.
+To assess whether observed local patterns can be explained solely by geometric effects and by the average rarefaction of primes, we introduce a geometric null model inspired by Cramér’s probabilistic model. In this null configuration, the embedding geometry and the global event intensity are preserved, while arithmetic correlations are removed via independent Bernoulli sampling.
 
-Comparisons between the real prime distribution and the null model are performed using non-parametric statistical tests, revealing residual spatial correlations at mesoscopic scales.
+By comparing the empirical distributions of local density for the real prime configuration and the null model using non-parametric statistical tests, we detect residual spatial correlations that persist beyond geometric and mean-density effects, particularly at intermediate (mesoscopic) spatial scales.
 
 ---
 
@@ -24,7 +24,7 @@ Comparisons between the real prime distribution and the null model are performed
 - Construct a calibrated geometric null model of Cramér type
 - Compare real and null configurations using distribution-level statistics
 - Identify scale-dependent residual spatial correlations
-
+- Test robustness under changes of spatial scale and domain size
 ---
 
 ## Repository structure
@@ -59,14 +59,6 @@ geometric-null-model-primes/
 │   ├── fig_ks_vs_radius_real_embedding.png
 │   └── KS_vs_N_caps.png
 │
-├── paper/
-│   ├── manuscript.docx
-│   ├── manuscript.pdf
-│   └── figures/
-│
-├── notebooks/
-│   └── exploratory_analysis.ipynb
-│
 └── requirements.txt
 ```
 
@@ -77,7 +69,7 @@ geometric-null-model-primes/
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/SEU_USUARIO/geometric-null-model-primes.git
+git clone https://github.com/tacigomess/geometric-null-model-primes.git
 cd geometric-null-model-primes
 pip install -r requirements.txt
 ```
@@ -87,9 +79,10 @@ Python ≥ 3.9 is recommended.
 ---
 ## Experimental Pipeline and Interpretation
 
-This project is organized as a sequence of numbered experiments. 
-Each experiment produces well-defined outputs that serve as inputs for subsequent stages. 
-Together, they allow a controlled investigation of local spatial structure in the geometric distribution of prime numbers.
+The project is organized as a sequence of numbered experiments (E1–E4), followed by a supplementary robustness analysis.
+Each experiment produces well-defined outputs that serve as inputs for subsequent stages.
+
+Together, these experiments allow a controlled investigation of local spatial structure in the geometric distribution of prime numbers.
 
 ### First of all: E1 — Generation of the geometric embedding (base dataset)
 
@@ -112,7 +105,7 @@ python E1_generate_log_spiral_dataset_min.py \
 ### E1 — Output
 `data/E1_base_log_espiral_1M.csv`
 
--The output directory (/data) is created by the script.
+-The output directory (/data) is created by the script if it does not exist.
 
 ### Typical columns include:
 
@@ -149,12 +142,31 @@ Base dataset generated in E1 : `data/E1_base_log_espiral_1M.csv`
 
 ### E2 — Probability model
 
-!!! Colocar uma breve explicação sobre a formula
-O que c significa e os valores. E o que o n significa. !!!
+The null model assigns an independent random event to each embedded point according to a Cramér-type probability law:
 
-```r
+```text
 p(n) = c / log(n)
 ```
+where:
+
+- n denotes the natural number associated with each geometric point,
+
+- log(n) reflects the asymptotic rarefaction of prime numbers,
+
+- c is a normalization constant chosen so that the expected total number of null events matches the observed number of real primes up to the cutoff N.
+
+```text
+c = (number of real primes) / sum(1 / log(n))
+```
+
+This calibration ensures that the null model reproduces:
+
+- the correct global intensity,
+
+- the large-scale density decay of primes,
+
+while removing all higher-order arithmetic correlations through independent Bernoulli sampling.
+
 
 ### E2 — Output
 `data/null_on_real_embedding.csv`
@@ -182,22 +194,29 @@ The null model:
 
 ### E3 - Compare local densities (reference scale)
 
-Esse script responde uma única pergunta:
+Objective
 
--“As distribuições de densidade local real e nula são estatisticamente compatíveis?”
+To test whether the empirical distributions of local prime density in the real configuration and in the null model are statistically compatible at a fixed spatial scale.
+
+This experiment answers a single question:
+
+- Are the real and null local density distributions statistically compatible?
 
 ```bash
 python scripts/compare_density_on_sampled_points_realembed.py
 ```
 
-This script/ Procedure:
-- samples spatial centers from the full embedding,
-- computes local densities for real and null configurations using KDTree radius queries,
-- performs Kolmogorov–Smirnov tests,
+Procedure:
+- Uniformly sample spatial centers from the full geometric embedding
+
+- Compute local densities for real and null configurations using KDTree radius queries
+
+- Compare the full empirical distributions using the Kolmogorov–Smirnov test
 
 ### E3 — Output
 
 - Typical terminal output:
+  
 ```bash
 ==== Density on sampled points (same geometry) ====
 Mean density (real): 19971.474
@@ -207,32 +226,31 @@ KS test:
 KS statistic = 0.0717
 p-value      = 3.31e-112
 ```
-- This provides direct evidence of residual spatial structure beyond the null model.
-- ¿Por Qué? Explicar quais números são vistos e como determinamos isso. O que é bom e ruim neste contexto.
+
+Interpretation
+
+Although the mean local densities coincide by construction, the Kolmogorov–Smirnov test compares the entire empirical distributions, not only their averages.
+The extremely small p-value indicates that the observed difference is not due to random fluctuations.
+
+In other words, the real and null configurations share the same global intensity, but differ in how local densities are distributed across space. This reflects subtle but systematic spatial organization beyond what is captured by an independent-event model.
 
 ### E3 - part 2 - Visualizing
 
-- generates CDF figures used in the manuscript.
+- Generates CDF figures.
 
+Scripts
 ```bash
 python scripts/plot_cdf_real_vs_null.py
-```
-![Image generated](./figures/fig_cdf_real_vs_null_R10.png)
-
-and
-
-```bash
 python scripts/plot_cdf_real_vs_null_with_KS_and_zoom.py
 ```
-![Image generated](./figures/fig_cdf_real_vs_null_R10_KS_zoom.png)
+
+Outputs
+- figures/fig_cdf_real_vs_null_R10.png
+- figures/fig_cdf_real_vs_null_R10_KS_zoom.png
 
 ### E3 - part 2 - Interpretation
 
-- Mean local densities coincide by construction (correct calibration).
-
-- The full empirical distributions differ significantly. Como se eles fossem quase iguais?
-
-- The maximum vertical separation between the CDFs corresponds to the KS statistic.
+- These figures show the empirical cumulative distribution functions (CDFs) of local density for the real and null configurations, with the KS statistic corresponding to the maximum vertical separation between the curves.
 
 ---
 
@@ -249,7 +267,7 @@ python scripts/sweep_radius_density_real_embedding.py
 
 ### E4 - Procedure
 
-Repeat the density comparison for multiple R:
+Repeat the density comparison for multiple neighborhood radii:
 ```css
 R in {2, 5, 10, 20}
 ```
@@ -257,47 +275,28 @@ R in {2, 5, 10, 20}
 ### E4 - This script:
 - repeats the density comparison across multiple R,
 - computes KS statistics as a function of scale,
-- saves results to `data/radius_sweep_real_embedding.csv`,
 
 ### E4 - Outputs
 `data/radius_sweep_real_embedding.csv`
 
+Typical results:
+```ini
 R=  2.0: mean(real)=2898.05 | mean(null)=2884.38 | KS=0.0413 | p=1.72e-37
 R=  5.0: mean(real)=9337.79 | mean(null)=9299.54 | KS=0.0631 | p=7.20e-87
 R= 10.0: mean(real)=19971.47 | mean(null)=19901.52 | KS=0.0717 | p=3.31e-112
 R= 20.0: mean(real)=45468.66 | mean(null)=45327.84 | KS=0.0518 | p=7.87e-59
+```
 
-### E4 - Interpretation
+### E4 – Interpretation 
 
-- The null hypothesis is rejected at all tested scales.
-  - At all tested radii, the Kolmogorov–Smirnov test strongly rejects the null hypothesis (p ≪ 10⁻⁶), indicating statistically incompatible distributions.
+At all tested radii, the Kolmogorov–Smirnov test strongly rejects the null hypothesis (p ≪ 10⁻⁶), indicating statistically incompatible distributions.
 
-- The KS statistic peaks at intermediate R (R ≈ 10).
+The magnitude of the discrepancy is scale-dependent. The KS statistic reaches its maximum at intermediate radii (R ≈ 10), indicating a regime in which residual spatial correlations are most pronounced.
 
-- Small scales probe immediate proximity.
+At small radii, neighborhoods probe immediate proximity and are dominated by discreteness and local rarefaction effects.
+At large radii, spatial averaging progressively smooths out local fluctuations, reducing sensitivity to residual correlations.
 
-- Large scales are dominated by spatial averaging.
-
-- The peak identifies a mesoscopic regime (intermediate-scale) where residual correlations are most pronounced.
-
-### E4 – Interpretation - Extended notes
-
-At all tested radii, the null hypothesis is strongly rejected, as indicated by
-extremely small p-values (p ≪ 10⁻⁶) in the Kolmogorov–Smirnov test. This confirms
-that the empirical distributions of local density for the real and null
-configurations are statistically incompatible across all considered scales.
-
-The magnitude of the discrepancy, however, is scale-dependent. The KS statistic
-reaches its maximum at intermediate radii (R ≈ 10 in the present experiment),
-indicating a regime in which residual spatial correlations are most pronounced.
-
-At small radii, neighborhoods probe immediate proximity and are dominated by
-discreteness and local rarefaction effects. At large radii, spatial averaging
-progressively smooths out local fluctuations, reducing sensitivity to residual
-correlations.
-
-The peak of the KS statistic therefore identifies a mesoscopic regime, defined
-relative to the explored range of scales rather than by an absolute spatial size.
+Here, the term mesoscopic is used in a relative sense, referring to intermediate scales within the explored range of neighborhood radii rather than to an absolute spatial size.
 
 
 ### E4 - part 2 - Generates the KS × R figure
@@ -309,6 +308,10 @@ python scripts/plot_ks_vs_radius_real_embedding.py
 ```
 
 ![Image generated](./figures/fig_ks_vs_radius_real_embedding.png)
+
+Poderia interpretar essa imagem, por favor.
+
+
 
 ---
 
@@ -322,7 +325,6 @@ To verify that the observed discrepancies are not artifacts of a specific cutoff
 `figures/KS_vs_N_caps.png`
 
 ![Image generated](./figures/fig_ks_vs_N_same_geometry.png)
-Figure S1.
 Kolmogorov–Smirnov divergence between the empirical distributions of local prime
 density for the real configuration and the same-geometry Cramér null model,
 as a function of the cutoff N.
@@ -332,36 +334,13 @@ This behavior indicates that the observed discrepancy is not a finite-size (cuto
 artifact, but rather reflects residual spatial correlations that are progressively
 diluted by spatial averaging in larger domains.
 
-### Supplementary experiment — Interpretation
 
-- The effect persists as N increases.
+### Supplementary experiment – Interpretation
+To verify that the detected discrepancy is not an artifact of a specific cutoff, we repeat the analysis for increasing values of N while keeping the neighborhood radius fixed.
 
-- The observed structure is stable under domain expansion.
----
+The KS statistic remains strictly positive and statistically significant for all tested values of N, while decreasing smoothly as N increases. This behavior indicates that the effect is not a finite-size artifact, but reflects residual spatial correlations that are gradually diluted by spatial averaging in larger domains.
 
-### Supplementary experiment — Stability under increasing domain size (N)
 
-To assess whether the detected discrepancy between the real prime configuration
-and the same-geometry Cramér null model is an artifact of a specific cutoff,
-we performed a robustness analysis under systematic expansion of the domain size N.
-
-For each cutoff N ∈ {200k, 400k, 600k, 800k}, we:
-
-1. Restrict the geometric embedding to the first N natural numbers.
-2. Recalibrate a same-geometry Cramér-type null model on this restricted domain.
-3. Sample spatial centers uniformly from the embedding.
-4. Compute local prime densities using a fixed neighborhood radius (R = 10).
-5. Compare real and null density distributions using the Kolmogorov–Smirnov test.
-
-The resulting KS statistics remain clearly positive and statistically significant
-for all tested values of N, while decreasing smoothly as N increases.
-
-This behavior indicates that the observed discrepancy is not a finite-size or
-boundary artifact. Instead, it reflects residual spatial correlations whose
-relative magnitude is gradually diluted by spatial averaging as the domain grows.
-
-The persistence and smooth decay of the KS statistic under increasing N provide
-strong evidence for the stability of the detected effect.
 
 ---
 
@@ -378,45 +357,19 @@ Conceptual summary
 ---
 ### Key takeaway
 
-- If the geometric null model were sufficient, the empirical density distributions of the real and null configurations would be statistically indistinguishable at all scales. The systematic rejection of the null hypothesis, particularly at intermediate scales, demonstrates the presence of residual spatial correlations in the geometric distribution of prime numbers.
----
-
-## Figures
-
-All figures appearing in the manuscript are generated by scripts in `scripts/` and saved in `figures/`:
-
-- **Figure 1** — Geometric embedding and neighborhood illustration  
-- **Figure 2** — Real vs null configuration (same geometry, side by side)  
-- **Figure 3** — CDF of local densities at \( R = 10 \)  
-- **Figure 3b** — Zoomed CDF with KS statistic highlighted  
-- **Figure 4** — KS statistic as a function of neighborhood radius  
-- **Supplementary** — KS vs cutoff experiments
+- If the geometric null model were sufficient, the empirical density distributions of the real and null configurations would be statistically indistinguishable at all scales.
+The systematic rejection of the null hypothesis, particularly at intermediate scales, demonstrates the presence of residual spatial correlations in the geometric distribution of prime numbers.
 
 ---
 
-## Methodological notes
+## License and citation
 
-- Local densities are **not evaluated exclusively at prime locations**, in order to avoid autoconditioning bias.
-- All comparisons preserve:
-  - embedding geometry,
-  - global event intensity,
-  - large-scale rarefaction.
-- Statistical comparisons are performed on full empirical distributions, not only on mean values.
+Code: MIT License (see LICENSE)
 
----
+Text and figures: CC BY 4.0
+© 2026 Taciana Gomes
 
-## Citation
-
-If you use this code or build upon this work, please cite the accompanying manuscript.  
-A `CITATION.cff` file is provided for automatic citation tools.
-
----
-
-## License
-
-- Code (Python scripts, shell, etc.): **MIT License** (see `LICENSE`).
-- Article text, documentation and explanatory figures: **CC BY 4.0**  
-  © 2025 **Taciana Gomes**. You may share and adapt the material, provided appropriate credit is given.
+A CITATION.cff file is provided for automatic citation.
 
 ---
 
