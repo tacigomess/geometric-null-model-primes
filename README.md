@@ -307,9 +307,17 @@ Here, the term mesoscopic is used in a relative sense, referring to intermediate
 python scripts/plot_ks_vs_radius_real_embedding.py
 ```
 
-![Image generated](./figures/fig_ks_vs_radius_real_embedding.png)
+figures/fig_ks_vs_radius_real_embedding.png
 
-Poderia interpretar essa imagem, por favor.
+Interpretation
+
+This figure shows the dependence of the Kolmogorov–Smirnov statistic on the neighborhood radius R. The KS value is strictly positive at all tested scales, confirming that the real and null configurations are statistically incompatible across the entire range of radii.
+
+The discrepancy is not uniform across scales. The KS statistic reaches a maximum at an intermediate radius (R ≈ 10), indicating that residual spatial correlations are most pronounced at this scale.
+
+At smaller radii, neighborhoods probe immediate proximity, where discreteness and local rarefaction dominate and limit contrast. At larger radii, spatial averaging smooths out local fluctuations, reducing sensitivity to residual correlations.
+
+The peak therefore identifies a mesoscopic regime, defined relative to the explored range of spatial scales, in which the geometric organization of primes deviates most strongly from the null model.
 
 
 
@@ -321,10 +329,24 @@ Poderia interpretar essa imagem, por favor.
 
 To verify that the observed discrepancies are not artifacts of a specific cutoff size.
 
+Scripts
+
+```bash
+python scripts/sweep_ks_vs_N_same_geometry.py
+python scripts/plot_ks_vs_N_same_geometry.py
+```
+```ini
+N=  200000: mean(real)=   5295.69 | mean(null)=   5267.07 | KS=0.0963 | p=2.50e-202 | primes=17984 | null=17882 | c=0.997125
+N=  400000: mean(real)=   9333.99 | mean(null)=   9274.08 | KS=0.0924 | p=2.80e-186 | primes=33860 | null=33638 | c=0.998160
+N=  600000: mean(real)=  13044.92 | mean(null)=  12995.74 | KS=0.0679 | p=1.33e-100 | primes=49098 | null=48909 | c=0.998482
+N=  800000: mean(real)=  16570.83 | mean(null)=  16513.85 | KS=0.0636 | p=1.81e-88 | primes=63951 | null=63732 | c=0.998656
+[skip] N=1000000 exceeds dataset rows=999999
+```
+
 ### Supplementary experiment — Output
 `figures/KS_vs_N_caps.png`
 
-![Image generated](./figures/fig_ks_vs_N_same_geometry.png)
+figures/fig_ks_vs_N_same_geometry.png
 Kolmogorov–Smirnov divergence between the empirical distributions of local prime
 density for the real configuration and the same-geometry Cramér null model,
 as a function of the cutoff N.
