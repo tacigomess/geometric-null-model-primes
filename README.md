@@ -34,7 +34,7 @@ geometric-null-model-primes/
 │
 ├── README.md
 ├── LICENSE
-├── LICENSEdoc
+├── LICENSE-doc
 ├── CITATION.cff
 │
 ├── data/
