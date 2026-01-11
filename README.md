@@ -208,7 +208,7 @@ KS statistic = 0.0717
 p-value      = 3.31e-112
 ```
 - This provides direct evidence of residual spatial structure beyond the null model.
-- Porque? Explicar quais números são vistos e como determinamos isso. O que é bom e ruim neste contexto.
+- ¿Por Qué? Explicar quais números são vistos e como determinamos isso. O que é bom e ruim neste contexto.
 
 ### E3 - part 2 - Visualizing
 
@@ -217,22 +217,20 @@ p-value      = 3.31e-112
 ```bash
 python scripts/plot_cdf_real_vs_null.py
 ```
-![Image generated](larara.png)
+![Image generated](./figures/fig_cdf_real_vs_null_R10.png)
 
 and
 
 ```bash
 python scripts/plot_cdf_real_vs_null_with_KS_and_zoom.py
 ```
-![Image generated](larara.png)
-
-!!! Colocar a figura que ele gera aqui!!!
+![Image generated](./figures/fig_cdf_real_vs_null_R10_KS_zoom.png)
 
 ### E3 - part 2 - Interpretation
 
 - Mean local densities coincide by construction (correct calibration).
 
-- The full empirical distributions differ significantly. Como se eles são quase iguais?
+- The full empirical distributions differ significantly. Como se eles fossem quase iguais?
 
 - The maximum vertical separation between the CDFs corresponds to the KS statistic.
 
@@ -260,28 +258,61 @@ R in {2, 5, 10, 20}
 - repeats the density comparison across multiple R,
 - computes KS statistics as a function of scale,
 - saves results to `data/radius_sweep_real_embedding.csv`,
-- generates the KS × R figure.
 
 ### E4 - Outputs
-çdata/radius_sweep_real_embedding.csv`
-`figures/fig_ks_vs_radius_real_embedding.png`
+`data/radius_sweep_real_embedding.csv`
+
+R=  2.0: mean(real)=2898.05 | mean(null)=2884.38 | KS=0.0413 | p=1.72e-37
+R=  5.0: mean(real)=9337.79 | mean(null)=9299.54 | KS=0.0631 | p=7.20e-87
+R= 10.0: mean(real)=19971.47 | mean(null)=19901.52 | KS=0.0717 | p=3.31e-112
+R= 20.0: mean(real)=45468.66 | mean(null)=45327.84 | KS=0.0518 | p=7.87e-59
 
 ### E4 - Interpretation
 
 - The null hypothesis is rejected at all tested scales.
+  - At all tested radii, the Kolmogorov–Smirnov test strongly rejects the null hypothesis (p ≪ 10⁻⁶), indicating statistically incompatible distributions.
 
-- The KS statistic peaks at intermediate radii (R ≈ 10).
+- The KS statistic peaks at intermediate R (R ≈ 10).
 
 - Small scales probe immediate proximity.
 
 - Large scales are dominated by spatial averaging.
 
-- The peak identifies a mesoscopic regime where residual correlations are most pronounced.
+- The peak identifies a mesoscopic regime (intermediate-scale) where residual correlations are most pronounced.
+
+### E4 – Interpretation - Extended notes
+
+At all tested radii, the null hypothesis is strongly rejected, as indicated by
+extremely small p-values (p ≪ 10⁻⁶) in the Kolmogorov–Smirnov test. This confirms
+that the empirical distributions of local density for the real and null
+configurations are statistically incompatible across all considered scales.
+
+The magnitude of the discrepancy, however, is scale-dependent. The KS statistic
+reaches its maximum at intermediate radii (R ≈ 10 in the present experiment),
+indicating a regime in which residual spatial correlations are most pronounced.
+
+At small radii, neighborhoods probe immediate proximity and are dominated by
+discreteness and local rarefaction effects. At large radii, spatial averaging
+progressively smooths out local fluctuations, reducing sensitivity to residual
+correlations.
+
+The peak of the KS statistic therefore identifies a mesoscopic regime, defined
+relative to the explored range of scales rather than by an absolute spatial size.
+
+
+### E4 - part 2 - Generates the KS × R figure
+
+- Generates the KS × R figure
+
+```bash
+python scripts/plot_ks_vs_radius_real_embedding.py
+```
+
+![Image generated](./figures/fig_ks_vs_radius_real_embedding.png)
 
 ---
----
 
-### Supplementary experiment — Dependence on the cutoff N
+### Supplementary experiment — Stability under increasing N
 
 ### Supplementary experiment — Objective
 
@@ -290,11 +321,48 @@ To verify that the observed discrepancies are not artifacts of a specific cutoff
 ### Supplementary experiment — Output
 `figures/KS_vs_N_caps.png`
 
+![Image generated](./figures/fig_ks_vs_N_same_geometry.png)
+Figure S1.
+Kolmogorov–Smirnov divergence between the empirical distributions of local prime
+density for the real configuration and the same-geometry Cramér null model,
+as a function of the cutoff N.
+The KS statistic remains strictly positive and statistically significant across
+all tested values of N, while decreasing smoothly as the domain size increases.
+This behavior indicates that the observed discrepancy is not a finite-size (cutoff)
+artifact, but rather reflects residual spatial correlations that are progressively
+diluted by spatial averaging in larger domains.
+
 ### Supplementary experiment — Interpretation
 
 - The effect persists as N increases.
 
 - The observed structure is stable under domain expansion.
+---
+
+### Supplementary experiment — Stability under increasing domain size (N)
+
+To assess whether the detected discrepancy between the real prime configuration
+and the same-geometry Cramér null model is an artifact of a specific cutoff,
+we performed a robustness analysis under systematic expansion of the domain size N.
+
+For each cutoff N ∈ {200k, 400k, 600k, 800k}, we:
+
+1. Restrict the geometric embedding to the first N natural numbers.
+2. Recalibrate a same-geometry Cramér-type null model on this restricted domain.
+3. Sample spatial centers uniformly from the embedding.
+4. Compute local prime densities using a fixed neighborhood radius (R = 10).
+5. Compare real and null density distributions using the Kolmogorov–Smirnov test.
+
+The resulting KS statistics remain clearly positive and statistically significant
+for all tested values of N, while decreasing smoothly as N increases.
+
+This behavior indicates that the observed discrepancy is not a finite-size or
+boundary artifact. Instead, it reflects residual spatial correlations whose
+relative magnitude is gradually diluted by spatial averaging as the domain grows.
+
+The persistence and smooth decay of the KS statistic under increasing N provide
+strong evidence for the stability of the detected effect.
+
 ---
 
 Conceptual summary
