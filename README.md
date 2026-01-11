@@ -43,21 +43,24 @@ geometric-null-model-primes/
 │   └── radius_sweep_real_embedding.csv
 │
 ├── scripts/
-│   ├── generate_embedding.py
+│   ├── E1_generate_log_spiral_dataset_min.py
 │   ├── generate_null_on_real_embedding.py
 │   ├── compare_density_on_sampled_points_realembed.py
 │   ├── sweep_radius_density_real_embedding.py
-│   └── utils/
-│       ├── primality.py
-│       ├── geometry.py
-│       └── sampling.py
+│   ├── plot_cdf_real_vs_null_with_KS_and_zoom.py
+│   ├── plot_cdf_real_vs_null.py
+│   ├── plot_ks_vs_N_same_geometry.py
+│   ├── plot_ks_vs_radius_real_embedding.py
+│   └── sweep_ks_vs_N_same_geometry.py/
 │
 ├── figures/
-│   ├── fig_real_vs_null_embedding_side_by_side.png
 │   ├── fig_cdf_real_vs_null_R10.png
 │   ├── fig_cdf_real_vs_null_R10_KS_zoom.png
 │   ├── fig_ks_vs_radius_real_embedding.png
-│   └── KS_vs_N_caps.png
+│   └── fig_ks_vs_N_same_geometry.png
+│ 
+├── results/
+│   └── ks_vs_N_same_geometry.csv
 │
 └── requirements.txt
 ```
