@@ -65,6 +65,16 @@ geometric-null-model-primes/
 └── requirements.txt
 ```
 
+--- 
+
+### Dependencies
+
+Core dependencies:
+- NumPy
+- Pandas
+- SciPy
+- Matplotlib
+
 ---
 
 ## Installation
