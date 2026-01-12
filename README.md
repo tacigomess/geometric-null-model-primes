@@ -203,6 +203,17 @@ The null model:
 
 - This experiment defines the main null hypothesis of the study.
 
+
+### Clarification on the probability model and notation
+
+In the construction of the geometric null model, each embedded point corresponding to a natural number 
+𝑛
+n is assigned an independent random event according to a Cramér-type probability law,
+
+```text
+p(n) = c / log(n)
+```
+
 ---
 
 ### E3 - Compare local densities (reference scale)
@@ -375,8 +386,6 @@ To verify that the detected discrepancy is not an artifact of a specific cutoff,
 
 The KS statistic remains strictly positive and statistically significant for all tested values of N, while decreasing smoothly as N increases. This behavior indicates that the effect is not a finite-size artifact, but reflects residual spatial correlations that are gradually diluted by spatial averaging in larger domains.
 
-
-
 ---
 
 Conceptual summary
@@ -388,6 +397,116 @@ Conceptual summary
 | E3            | Detects local discrepancies |
 | E4            | Tests scale robustness      |
 | Supplementary | Verifies stability          |
+
+---
+### Mathematical and statistical notes
+---
+
+This section clarifies the notation and modeling choices used throughout the repository, in a GitHub-friendly format.
+
+---
+###What does pi(N) mean?
+
+In number theory, pi(N) does not refer to the mathematical constant 3.14159.
+
+Instead, pi(N) denotes the prime counting function:
+
+- pi(N) = number of prime numbers less than or equal to N
+
+Examples:
+
+- pi(10) = 4 (primes are 2, 3, 5, 7)
+
+- pi(100) = 25
+
+- pi(1,000,000) = 78,498
+
+In this project, pi(N) is used only as a counting reference to calibrate the null model.
+It is never used as a geometric or numerical constant.
+
+---
+### Why does 1 / log(n) appear?
+
+The Prime Number Theorem states that, asymptotically, the density of prime numbers near n behaves like:
+
+- density ≈ 1 / log(n)
+
+This does not imply that primes are random.
+Instead, it describes their average rarefaction at large scales.
+
+In this project, 1 / log(n) is used as a baseline intensity function, providing the correct large-scale decay of prime density.
+
+--- 
+### What is the constant c?
+
+In the geometric null model, each embedded natural number n is assigned an independent Bernoulli event with probability:
+
+- p(n) = c / log(n)
+
+The constant c is a normalization factor, chosen so that the total expected number of null events matches the number of real primes.
+
+Formally:
+
+- c = (number of real primes up to N) / sum over n=2..N of (1 / log(n))
+
+This calibration ensures that:
+
+- the null model has the same global intensity as the real data,
+
+- observed discrepancies cannot be explained by trivial differences in event count.
+
+Typical values of c are close to 1 (for example, c ≈ 0.998), reflecting the accuracy of the Prime Number Theorem at large N.
+
+---
+### What does the null model represent?
+
+The geometric null model:
+
+- uses exactly the same (x, y) coordinates as the real embedding,
+
+- reproduces the correct large-scale decay of prime density,
+
+- matches the total number of events,
+
+- removes all arithmetic correlations by making events independent.
+
+It answers the question:
+
+“What would the spatial distribution look like if primes followed only their average density, with no additional structure?”
+
+---
+### Why use the Kolmogorov–Smirnov (KS) test?
+
+The KS test compares entire empirical distributions, not just mean values.
+
+Even when:
+
+- mean density (real) ≈ mean density (null),
+
+- the KS test can detect differences in:
+
+- clustering,
+
+- tails,
+
+- spatial heterogeneity.
+
+Very small p-values (for example, p << 1e-6) indicate that the two distributions are statistically incompatible.
+
+---
+### Interpreting “mesoscopic scale”
+
+The term mesoscopic is used in a relative sense.
+
+In this project:
+
+- small R probes immediate geometric proximity,
+
+- large R averages over many points and smooths fluctuations,
+
+- intermediate R (for example R ≈ 10 within the explored range) maximizes the KS discrepancy.
+
+Thus, “mesoscopic” refers to intermediate scales within the explored range, not to an absolute spatial size.
 
 ---
 ### Key takeaway
