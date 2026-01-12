@@ -402,7 +402,7 @@ Conceptual summary
 ### Mathematical and statistical notes
 ---
 
-This section clarifies the notation and modeling choices used throughout the repository, in a GitHub-friendly format.
+This section clarifies the notation and modeling choices used throughout the repository.
 
 ---
 ###What does pi(N) mean?
