@@ -16,7 +16,7 @@ To assess whether observed local patterns can be explained solely by geometric e
 By comparing the empirical distributions of local density for the real prime configuration and the null model using non-parametric statistical tests, we detect residual spatial correlations that persist beyond geometric and mean-density effects, particularly at intermediate (mesoscopic) spatial scales.
 
 ---
-###Relation to existing work
+### Relation to existing work
 
 This project connects and extends several previously independent research directions:
 classical geometric visualizations of prime numbers (e.g. Ulam-type spirals),
