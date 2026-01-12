@@ -16,6 +16,21 @@ To assess whether observed local patterns can be explained solely by geometric e
 By comparing the empirical distributions of local density for the real prime configuration and the null model using non-parametric statistical tests, we detect residual spatial correlations that persist beyond geometric and mean-density effects, particularly at intermediate (mesoscopic) spatial scales.
 
 ---
+###Relation to existing work
+
+This project connects and extends several previously independent research directions:
+classical geometric visualizations of prime numbers (e.g. Ulam-type spirals),
+probabilistic models of prime occurrence (Cramér-type models),
+tools from spatial statistics and point process theory.
+While each of these approaches has been studied separately, this work is, to our knowledge, the first to combine:
+a fixed continuous geometric embedding of the integers,
+a calibrated Cramér-type null model defined on the same geometry,
+local density measurements evaluated on neutral spatial samples, and
+distribution-level statistical comparisons across multiple spatial scales.
+
+- This framework allows residual spatial correlations to be detected in a controlled and reproducible manner, beyond both purely visual inspection and purely one-dimensional probabilistic models.
+
+--- 
 
 ## Scientific goals
 
