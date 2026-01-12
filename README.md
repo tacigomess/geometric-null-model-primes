@@ -214,6 +214,8 @@ n is assigned an independent random event according to a Cramér-type probabilit
 p(n) = c / log(n)
 ```
 
+For a detailed discussion of the probabilistic model, normalization constant c, and related notation, see the “Mathematical and statistical notes” section below.
+
 ---
 
 ### E3 - Compare local densities (reference scale)
