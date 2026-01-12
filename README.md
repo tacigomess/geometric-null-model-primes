@@ -369,6 +369,8 @@ N=  800000: mean(real)=  16570.83 | mean(null)=  16513.85 | KS=0.0636 | p=1.81e-
 [skip] N=1000000 exceeds dataset rows=999999
 ```
 
+- Note that the normalization constant c is typically very close to 1, reflecting the high accuracy of the Prime Number Theorem at large scales.
+
 ### Supplementary experiment — Output
 `figures/KS_vs_N_caps.png`
 
