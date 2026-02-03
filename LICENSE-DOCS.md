@@ -1,4 +1,8 @@
-The article text, documentation, and figures in this repository (files in `docs/` and the “Halos Primais Artigo” document) are licensed under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license.
+# Documentation and Article License
+
+This repository contains software and scientific material licensed under different terms.
+
+The article text, documentation, and figures in this repository are licensed under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license.
 
 You are free to:
 
