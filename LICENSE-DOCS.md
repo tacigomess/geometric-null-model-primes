@@ -1,7 +1,3 @@
-Content License (Article and Documentation)
-
-© 2025 Taciana Gomes.
-
 The article text, documentation, and figures in this repository (files in `docs/` and the “Halos Primais Artigo” document) are licensed under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license.
 
 You are free to:
