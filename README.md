@@ -120,7 +120,7 @@ This experiment defines the fixed geometric space used throughout the project.
 
 
 ```bash
-python E1_generate_log_spiral_dataset_min.py \
+python scripts/E1_generate_log_spiral_dataset_min.py \
   --N 1000000 \
   --b 0.1 \
   --radius_mode adaptive \
@@ -161,7 +161,7 @@ To generate a statistically controlled null configuration that preserves geometr
 
 ### E2 — Script
 ```bash
-python generate_null_on_real_embedding.py
+python scripts/generate_null_on_real_embedding.py
 ```
 
 ### E2 — Input
