@@ -32,6 +32,18 @@ distribution-level statistical comparisons across multiple spatial scales.
 
 --- 
 
+### Extensibility
+
+The pipeline is modular by design. Researchers can:
+- change the embedding parameters,
+- modify the neighborhood radius or sampling strategy,
+- explore alternative null models,
+- or extend the analysis to larger values of \( N \),
+
+while preserving the same reproducible structure.
+
+--- 
+
 ## Scientific goals
 
 - Embed natural numbers and primes in a continuous geometric space
