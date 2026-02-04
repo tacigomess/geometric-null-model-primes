@@ -539,10 +539,10 @@ The systematic rejection of the null hypothesis, particularly at intermediate sc
 
 This repository uses dual licensing:
 
-- **Code**: MIT License (see LICENSE or LICENSE.txt)
+- **Code**: MIT License (see LICENSE.txt)
 - **Article text, documentation, and figures**:  
   Creative Commons Attribution 4.0 International (CC BY 4.0)  
-  See LICENSE-DOCS.md
+  See DOCS-LICENSE.md
 
 ---
 
